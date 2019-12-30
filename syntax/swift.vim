@@ -13,6 +13,8 @@ syntax match swiftShebang "\v#!.*$"
 " Comment contained keywords
 syntax keyword swiftTodos contained TODO XXX FIXME NOTE
 syntax keyword swiftMarker contained MARK
+" Highlight the name that comes after MARK:
+syntax match swiftMarkerName "\v(^\s*\/\/\s*MARK:\s*)@<=.*"
 
 " In comment identifiers
 function! s:CommentKeywordMatch(keyword)
@@ -254,9 +256,9 @@ syntax keyword swiftPreprocessor
 
 " Comment patterns
 syntax match swiftComment "\v\/\/.*$"
-      \ contains=swiftTodos,swiftDocString,swiftMarker,@Spell oneline
+      \ contains=swiftTodos,swiftDocString,swiftMarker,swiftMarkerName,@Spell oneline
 syntax region swiftComment start="/\*" end="\*/"
-      \ contains=swiftTodos,swiftDocString,swiftMarker,@Spell fold
+      \ contains=swiftTodos,swiftDocString,swiftMarker,swiftMarkerName,@Spell fold
 
 
 " Set highlights
@@ -265,6 +267,7 @@ highlight default link swiftDocString String
 highlight default link swiftShebang Comment
 highlight default link swiftComment Comment
 highlight default link swiftMarker Comment
+highlight default link swiftMarkerName SpecialComment
 
 highlight default link swiftString String
 highlight default link swiftMultilineString String
